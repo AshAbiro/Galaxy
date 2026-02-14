@@ -27,7 +27,6 @@ The project is configured for Vercel's Python runtime with Flask:
 - Flask entrypoint: `app.py`
 - Health endpoint: `/api/health`
 - Static assets served directly from `web/` by Flask routes
-- `vercel.json` routes all requests to `app.py` and bundles `web/**`
 
 Deploy:
 
