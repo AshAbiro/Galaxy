@@ -1,0 +1,13 @@
+127.0.0.1 - - [15/Feb/2026 00:02:28] "GET /web/ HTTP/1.1" 200 -
+127.0.0.1 - - [15/Feb/2026 00:02:57] "GET /web/ HTTP/1.1" 304 -
+127.0.0.1 - - [15/Feb/2026 00:02:57] "GET /web/styles.css HTTP/1.1" 200 -
+127.0.0.1 - - [15/Feb/2026 00:02:57] "GET /web/app.js HTTP/1.1" 200 -
+127.0.0.1 - - [15/Feb/2026 00:02:58] code 404, message File not found
+127.0.0.1 - - [15/Feb/2026 00:02:58] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [15/Feb/2026 00:17:24] "GET /web/ HTTP/1.1" 304 -
+127.0.0.1 - - [15/Feb/2026 00:17:24] "GET /web/styles.css HTTP/1.1" 200 -
+127.0.0.1 - - [15/Feb/2026 00:17:24] "GET /web/app.js HTTP/1.1" 200 -
+127.0.0.1 - - [15/Feb/2026 00:54:18] "GET /web/ HTTP/1.1" 304 -
+127.0.0.1 - - [15/Feb/2026 00:54:18] "GET /web/app.js HTTP/1.1" 200 -
+127.0.0.1 - - [15/Feb/2026 00:54:18] "GET /web/styles.css HTTP/1.1" 304 -
+127.0.0.1 - - [15/Feb/2026 00:54:19] "GET /web/galaxy-data.json HTTP/1.1" 200 -

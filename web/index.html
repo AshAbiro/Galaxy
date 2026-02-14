@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sanguis Noctis | Command Console</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="bg-layer layer-nebula"></div>
+    <div class="bg-layer layer-grid"></div>
+    <div class="bg-layer layer-noise"></div>
+    <div class="scanline-overlay"></div>
+
+    <div class="app-shell">
+      <header class="topbar panel">
+        <div>
+          <p class="tag">CLASSIFIED ASTROGRAPHIC ARCHIVE</p>
+          <h1 id="galaxyName">SANGUIS NOCTIS</h1>
+        </div>
+        <div class="topbar-right">
+          <p class="statline"><span>Dominant Class</span><strong>M-Type Dwarf</strong></p>
+          <p class="statline"><span>Security Layer</span><strong>Crimson-7</strong></p>
+          <p class="statline"><span>Revision</span><strong id="revisionDate"></strong></p>
+        </div>
+      </header>
+
+      <nav class="nav panel">
+        <button class="nav-btn active" data-view="command">Command View</button>
+        <button class="nav-btn" data-view="sectors">Sectors</button>
+        <button class="nav-btn" data-view="systems">Star Systems</button>
+        <button class="nav-btn" data-view="encyclopedia">Encyclopedia</button>
+      </nav>
+
+      <main>
+        <section id="view-command" class="view active">
+          <div class="layout command-layout">
+            <section class="panel command-map-wrap">
+              <div class="panel-head">
+                <h2>Galaxy Command View</h2>
+                <p>Rotating tactical projection with sector routes and live node telemetry.</p>
+              </div>
+              <canvas id="galaxyCanvas" width="1080" height="700" aria-label="Galaxy tactical map"></canvas>
+              <div class="map-actions">
+                <button id="warpBtn" class="danger-btn">Initiate Jump</button>
+                <button id="toggleRoutesBtn" class="ghost-btn">Toggle Routes</button>
+              </div>
+            </section>
+
+            <aside class="panel warp-panel">
+              <div class="panel-head">
+                <h2>Warp Target</h2>
+                <p>Weighted by real star class distributions and orbital constraints.</p>
+              </div>
+              <div id="warpResult" class="warp-result">
+                <p class="muted">No jump executed.</p>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section id="view-sectors" class="view">
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Sector Grid</h2>
+              <p>Radiation, density, and threat overlays with local traffic mini-maps.</p>
+            </div>
+            <div id="sectorGrid" class="sector-grid"></div>
+          </div>
+        </section>
+
+        <section id="view-systems" class="view">
+          <div class="layout systems-layout">
+            <aside class="panel filters">
+              <div class="panel-head">
+                <h2>System Filters</h2>
+                <p>Constrain discovery by stellar architecture and survivability.</p>
+              </div>
+
+              <label class="field">
+                <span>Star Class</span>
+                <select id="starClassFilter">
+                  <option value="all">All</option>
+                  <option value="O">O</option>
+                  <option value="B">B</option>
+                  <option value="A">A</option>
+                  <option value="F">F</option>
+                  <option value="G">G</option>
+                  <option value="K">K</option>
+                  <option value="M">M</option>
+                </select>
+              </label>
+
+              <label class="field inline">
+                <input id="binaryFilter" type="checkbox" />
+                <span>Binary/Trinary Only</span>
+              </label>
+
+              <label class="field">
+                <span>Minimum Habitability</span>
+                <input id="habitabilityFilter" type="range" min="0" max="100" step="1" value="0" />
+                <strong id="habitabilityFilterValue">0</strong>
+              </label>
+
+              <label class="field inline">
+                <input id="highRadiationFilter" type="checkbox" />
+                <span>High Radiation Sectors (70+)</span>
+              </label>
+
+              <div class="system-list-wrap">
+                <h3>Systems</h3>
+                <div id="systemList" class="system-list"></div>
+              </div>
+            </aside>
+
+            <section class="panel system-detail">
+              <div class="panel-head">
+                <h2 id="systemTitle">Select a System</h2>
+                <p id="systemSubtitle">Tactical telemetry and orbital architecture.</p>
+              </div>
+
+              <div class="system-meta">
+                <div id="starStats" class="star-stats"></div>
+                <div class="scan-controls">
+                  <button id="scanModeBtn" class="danger-btn">Scan Mode: Off</button>
+                  <p id="scanStatus" class="muted">Select a planet and enable scan mode.</p>
+                </div>
+              </div>
+
+              <div class="orbit-wrap">
+                <canvas id="orbitCanvas" width="1100" height="560" aria-label="System orbit diagram"></canvas>
+                <div id="scanOverlay" class="scan-overlay hidden"></div>
+                <article id="planetFocusOverlay" class="planet-focus hidden" aria-live="polite">
+                  <button id="planetFocusClose" class="planet-focus-close" type="button">Close Focus</button>
+                  <div id="planetFocusContent"></div>
+                </article>
+              </div>
+              <p class="orbit-hint muted">Click a planet on the orbit map to zoom and inspect details.</p>
+
+              <section class="timeline panel inset">
+                <div class="panel-head">
+                  <h3>System Formation Timeline</h3>
+                </div>
+                <input id="timelineSlider" type="range" min="0" max="100" value="0" />
+                <div id="timelineEvent" class="timeline-event muted">Load a system to inspect formation history.</div>
+              </section>
+
+              <section class="comparison panel inset">
+                <div class="panel-head">
+                  <h3>Planet Comparison Tool</h3>
+                  <p>Compare gravity, temperature, pressure, and habitability.</p>
+                </div>
+                <div id="comparisonPanel" class="comparison-panel">
+                  <p class="muted">Select up to 4 planets for comparison.</p>
+                </div>
+              </section>
+
+              <section>
+                <h3>Planetary Registry</h3>
+                <div id="planetRegistry" class="planet-registry"></div>
+              </section>
+            </section>
+          </div>
+        </section>
+
+        <section id="view-encyclopedia" class="view">
+          <div class="panel">
+            <div class="panel-head">
+              <h2>Scientific Encyclopedia</h2>
+              <p>Operational knowledge for astrophysical interpretation and mission planning.</p>
+            </div>
+            <div id="encyclopediaGrid" class="encyclopedia-grid"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

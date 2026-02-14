@@ -1,0 +1,1040 @@
+{
+  "name": "Sanguis Noctis",
+  "sectors": [
+    {
+      "id": "hemlock",
+      "n": "Hemlock Core",
+      "r": 78,
+      "d": 92,
+      "t": 84,
+      "tint": "rgba(177,18,38,.18)",
+      "c": [
+        -0.11,
+        -0.08
+      ],
+      "s": [
+        "Kharon-41"
+      ]
+    },
+    {
+      "id": "cinder",
+      "n": "Cinder Lattice",
+      "r": 64,
+      "d": 74,
+      "t": 66,
+      "tint": "rgba(42,13,46,.22)",
+      "c": [
+        0.34,
+        -0.18
+      ],
+      "s": [
+        "Vespera-27"
+      ]
+    },
+    {
+      "id": "razor",
+      "n": "Razor Meridian",
+      "r": 47,
+      "d": 68,
+      "t": 55,
+      "tint": "rgba(177,18,38,.12)",
+      "c": [
+        0.45,
+        0.28
+      ],
+      "s": [
+        "Nyx-72"
+      ]
+    },
+    {
+      "id": "vanta",
+      "n": "Vanta Choir",
+      "r": 88,
+      "d": 56,
+      "t": 91,
+      "tint": "rgba(177,18,38,.27)",
+      "c": [
+        -0.3,
+        -0.29
+      ],
+      "s": []
+    },
+    {
+      "id": "obsidian",
+      "n": "Obsidian Frontier",
+      "r": 31,
+      "d": 42,
+      "t": 38,
+      "tint": "rgba(177,18,38,.08)",
+      "c": [
+        -0.5,
+        0.24
+      ],
+      "s": []
+    },
+    {
+      "id": "null",
+      "n": "Null Aurora Rim",
+      "r": 22,
+      "d": 28,
+      "t": 29,
+      "tint": "rgba(42,13,46,.16)",
+      "c": [
+        0.04,
+        0.53
+      ],
+      "s": []
+    }
+  ],
+  "systems": [
+    {
+      "id": "kharon-41",
+      "n": "Kharon-41",
+      "sector": "Hemlock Core",
+      "star": {
+        "cls": "M3V",
+        "tk": 2735,
+        "lum": 0.02377,
+        "age": 11.71,
+        "hz": [
+          0.146,
+          0.257
+        ],
+        "mult": "Trinary (M8V + M3V pair)",
+        "frost": 0.748,
+        "belt": [
+          0.705,
+          0.836
+        ],
+        "m": 0.33
+      },
+      "tl": [
+        [
+          0,
+          "Molecular cloud collapse and protostar ignition."
+        ],
+        [
+          20,
+          "Rocky embryo growth and early orbital clearing."
+        ],
+        [
+          2576,
+          "Late accretion and migration damping."
+        ],
+        [
+          5269,
+          "Atmospheric restructuring and climate stabilization."
+        ],
+        [
+          11710,
+          "Present epoch with mature orbital architecture."
+        ]
+      ],
+      "p": [
+        {
+          "n": "Razor Ember",
+          "t": "Hot super-Earth",
+          "m": [
+            1.29,
+            "Earth"
+          ],
+          "rad": [
+            1.19,
+            "Earth"
+          ],
+          "g": 0.91,
+          "a": 0.0658,
+          "op": 10.73,
+          "rp": "10.7 d",
+          "rot_days": 10.732,
+          "tilt": 1.3,
+          "temp": [
+            437,
+            612
+          ],
+          "atm": {
+            "CO2": 71.1,
+            "N2": 18.8,
+            "SO2": 4.6,
+            "H2O": 2.8,
+            "Ar": 2.7
+          },
+          "pb": 2.45,
+          "teq": 409.9,
+          "tmean": 529.4,
+          "mag": "Yes",
+          "alb": 0.14,
+          "hab": 2,
+          "v": "Dark red deserts and obsidian plains sit under mineral haze bands. Long-terminator weather corridors indicate synchronous rotation. Strong auroral bands appear during particle storms.",
+          "sci": "The planet orbits outside the conservative habitable zone at 0.066 AU. Surface pressure (2.45 bar) and gravity (0.91 g) set cloud scale heights and convection efficiency. Likely tidal locking reshapes day-night circulation.",
+          "x": {
+            "h": "High",
+            "c": "Low",
+            "rv": "Moderate-high",
+            "tf": "Very high"
+          },
+          "locked": true
+        },
+        {
+          "n": "Sable Meridian",
+          "t": "Cold super-Earth",
+          "m": [
+            1.11,
+            "Earth"
+          ],
+          "rad": [
+            1.32,
+            "Earth"
+          ],
+          "g": 0.64,
+          "a": 0.1225,
+          "op": 27.26,
+          "rp": "27.3 d",
+          "rot_days": 27.2642,
+          "tilt": 5.5,
+          "temp": [
+            259,
+            364
+          ],
+          "atm": {
+            "N2": 60.6,
+            "CO2": 25.0,
+            "O2": 8.4,
+            "Ar": 3.9,
+            "CH4": 2.1
+          },
+          "pb": 1.55,
+          "teq": 282.7,
+          "tmean": 314.2,
+          "mag": "Yes",
+          "alb": 0.32,
+          "hab": 73,
+          "v": "Rust-tinted tundra and black escarpments with seasonal frost fields. Long-terminator weather corridors indicate synchronous rotation. Strong auroral bands appear during particle storms.",
+          "sci": "The planet orbits outside the conservative habitable zone at 0.123 AU. Surface pressure (1.55 bar) and gravity (0.64 g) set cloud scale heights and convection efficiency. Likely tidal locking reshapes day-night circulation.",
+          "x": {
+            "h": "Moderate",
+            "c": "Moderate",
+            "rv": "High",
+            "tf": "Moderate"
+          },
+          "locked": true
+        },
+        {
+          "n": "Noctis Pelagic",
+          "t": "Temperate terrestrial",
+          "m": [
+            1.21,
+            "Earth"
+          ],
+          "rad": [
+            1.11,
+            "Earth"
+          ],
+          "g": 0.99,
+          "a": 0.2063,
+          "op": 59.6,
+          "rp": "2.5 d",
+          "rot_days": 2.4817,
+          "tilt": 30.6,
+          "temp": [
+            205,
+            254
+          ],
+          "atm": {
+            "N2": 75.3,
+            "O2": 20.4,
+            "Ar": 2.4,
+            "CO2": 0.9,
+            "H2O": 1.0
+          },
+          "pb": 1.29,
+          "teq": 215.1,
+          "tmean": 232.4,
+          "mag": "Yes",
+          "alb": 0.36,
+          "hab": 80,
+          "v": "Dark oceans and iron-rich continents with layered cloud decks. Coriolis-driven circulation produces broad moving fronts. Strong auroral bands appear during particle storms.",
+          "sci": "The planet orbits inside the stellar habitable zone at 0.206 AU. Surface pressure (1.29 bar) and gravity (0.99 g) set cloud scale heights and convection efficiency. Non-synchronous rotation enables stronger zonal heat redistribution.",
+          "x": {
+            "h": "Moderate",
+            "c": "High",
+            "rv": "High",
+            "tf": "Low"
+          },
+          "locked": false
+        },
+        {
+          "n": "Acheron Steppe",
+          "t": "Cold super-Earth",
+          "m": [
+            2.82,
+            "Earth"
+          ],
+          "rad": [
+            1.5,
+            "Earth"
+          ],
+          "g": 1.26,
+          "a": 0.3514,
+          "op": 132.45,
+          "rp": "47.9 h",
+          "rot_days": 1.997,
+          "tilt": 19.6,
+          "temp": [
+            174,
+            235
+          ],
+          "atm": {
+            "N2": 61.7,
+            "CO2": 25.4,
+            "O2": 6.8,
+            "Ar": 3.8,
+            "CH4": 2.3
+          },
+          "pb": 3.79,
+          "teq": 167.6,
+          "tmean": 207.8,
+          "mag": "Yes",
+          "alb": 0.31,
+          "hab": 48,
+          "v": "Rust-tinted tundra and black escarpments with seasonal frost fields. Coriolis-driven circulation produces broad moving fronts. Strong auroral bands appear during particle storms.",
+          "sci": "The planet orbits outside the conservative habitable zone at 0.351 AU. Surface pressure (3.79 bar) and gravity (1.26 g) set cloud scale heights and convection efficiency. Non-synchronous rotation enables stronger zonal heat redistribution.",
+          "x": {
+            "h": "Moderate-high",
+            "c": "Low-moderate",
+            "rv": "High",
+            "tf": "High"
+          },
+          "locked": false
+        },
+        {
+          "n": "Crimson Shepherd",
+          "t": "Cold super-Earth",
+          "m": [
+            1.84,
+            "Earth"
+          ],
+          "rad": [
+            1.56,
+            "Earth"
+          ],
+          "g": 0.75,
+          "a": 0.5606,
+          "op": 266.86,
+          "rp": "2.4 d",
+          "rot_days": 2.408,
+          "tilt": 28.6,
+          "temp": [
+            117,
+            190
+          ],
+          "atm": {
+            "N2": 64.9,
+            "CO2": 20.9,
+            "O2": 8.6,
+            "Ar": 3.3,
+            "CH4": 2.3
+          },
+          "pb": 1.65,
+          "teq": 132.8,
+          "tmean": 157.8,
+          "mag": "Yes",
+          "alb": 0.31,
+          "hab": 23,
+          "v": "Rust-tinted tundra and black escarpments with seasonal frost fields. Coriolis-driven circulation produces broad moving fronts. Strong auroral bands appear during particle storms.",
+          "sci": "The planet orbits outside the conservative habitable zone at 0.561 AU. Surface pressure (1.65 bar) and gravity (0.75 g) set cloud scale heights and convection efficiency. Non-synchronous rotation enables stronger zonal heat redistribution.",
+          "x": {
+            "h": "High",
+            "c": "Low",
+            "rv": "Moderate-high",
+            "tf": "Very high"
+          },
+          "locked": false
+        },
+        {
+          "n": "Veil Leviathan",
+          "t": "Gas giant",
+          "m": [
+            1.79,
+            "Jupiter"
+          ],
+          "rad": [
+            1.0,
+            "Jupiter"
+          ],
+          "g": 4.51,
+          "a": 1.103,
+          "op": 736.57,
+          "rp": "10.2 h",
+          "rot_days": 0.4268,
+          "tilt": 23.8,
+          "temp": [
+            106,
+            170
+          ],
+          "atm": {
+            "H2": 85.4,
+            "He": 13.6,
+            "CH4": 0.7,
+            "NH3": 0.2,
+            "Traces": 0.1
+          },
+          "pb": 1,
+          "teq": 91.7,
+          "tmean": 141.7,
+          "mag": "Yes",
+          "alb": 0.39,
+          "hab": 0,
+          "v": "Burgundy and charcoal cloud bands with bright electrical storm cells. Coriolis-driven circulation produces broad moving fronts. Strong auroral bands appear during particle storms.",
+          "sci": "Orbital placement at 1.10 AU is beyond the frost line where volatile-rich cores can capture deep hydrogen-helium envelopes. Pressure values are reported at a 1 bar reference level, and gravity (4.51 g) reflects the mass-radius combination.",
+          "x": {
+            "h": "Extreme",
+            "c": "Moons only",
+            "rv": "Very high",
+            "tf": "N/A"
+          },
+          "locked": false
+        }
+      ]
+    },
+    {
+      "id": "vespera-27",
+      "n": "Vespera-27",
+      "sector": "Cinder Lattice",
+      "star": {
+        "cls": "M1V",
+        "tk": 3164,
+        "lum": 0.00122,
+        "age": 2.32,
+        "hz": [
+          0.033,
+          0.058
+        ],
+        "mult": "Single",
+        "frost": 0.169,
+        "belt": [
+          0.184,
+          0.228
+        ],
+        "m": 0.097
+      },
+      "tl": [
+        [
+          0,
+          "Molecular cloud collapse and protostar ignition."
+        ],
+        [
+          20,
+          "Rocky embryo growth and early orbital clearing."
+        ],
+        [
+          510,
+          "Late accretion and migration damping."
+        ],
+        [
+          1044,
+          "Atmospheric restructuring and climate stabilization."
+        ],
+        [
+          2320,
+          "Present epoch with mature orbital architecture."
+        ]
+      ],
+      "p": [
+        {
+          "n": "Glassknife",
+          "t": "Oceanic super-Earth",
+          "m": [
+            1.63,
+            "Earth"
+          ],
+          "rad": [
+            1.63,
+            "Earth"
+          ],
+          "g": 0.61,
+          "a": 0.0492,
+          "op": 12.81,
+          "rp": "12.8 d",
+          "rot_days": 12.8133,
+          "tilt": 4.6,
+          "temp": [
+            203,
+            264
+          ],
+          "atm": {
+            "N2": 72.9,
+            "O2": 12.9,
+            "CO2": 7.5,
+            "H2O": 4.3,
+            "Ar": 2.4
+          },
+          "pb": 1.25,
+          "teq": 209.4,
+          "tmean": 234.9,
+          "mag": "Yes",
+          "alb": 0.36,
+          "hab": 80,
+          "v": "A deep ocean world with bright cloud annulus over warm longitudes. Long-terminator weather corridors indicate synchronous rotation. Strong auroral bands appear during particle storms.",
+          "sci": "The planet orbits inside the stellar habitable zone at 0.049 AU. Surface pressure (1.25 bar) and gravity (0.61 g) set cloud scale heights and convection efficiency. Likely tidal locking reshapes day-night circulation.",
+          "x": {
+            "h": "Moderate",
+            "c": "High",
+            "rv": "High",
+            "tf": "Low"
+          },
+          "locked": true
+        },
+        {
+          "n": "Helion Scar",
+          "t": "Cold super-Earth",
+          "m": [
+            3.53,
+            "Earth"
+          ],
+          "rad": [
+            1.56,
+            "Earth"
+          ],
+          "g": 1.45,
+          "a": 0.0884,
+          "op": 30.83,
+          "rp": "20.0 h",
+          "rot_days": 0.8341,
+          "tilt": 22.6,
+          "temp": [
+            158,
+            221
+          ],
+          "atm": {
+            "N2": 67.7,
+            "CO2": 22.4,
+            "O2": 5.7,
+            "Ar": 2.6,
+            "CH4": 1.6
+          },
+          "pb": 4.2,
+          "teq": 153.7,
+          "tmean": 193.3,
+          "mag": "No",
+          "alb": 0.4,
+          "hab": 18,
+          "v": "Rust-tinted tundra and black escarpments with seasonal frost fields. Coriolis-driven circulation produces broad moving fronts. Aurora is weak due limited magnetospheric shielding.",
+          "sci": "The planet orbits outside the conservative habitable zone at 0.088 AU. Surface pressure (4.20 bar) and gravity (1.45 g) set cloud scale heights and convection efficiency. Non-synchronous rotation enables stronger zonal heat redistribution.",
+          "x": {
+            "h": "High",
+            "c": "Low",
+            "rv": "Moderate-high",
+            "tf": "Very high"
+          },
+          "locked": false
+        },
+        {
+          "n": "Orphea",
+          "t": "Cold super-Earth",
+          "m": [
+            3.4,
+            "Earth"
+          ],
+          "rad": [
+            1.68,
+            "Earth"
+          ],
+          "g": 1.2,
+          "a": 0.1516,
+          "op": 69.22,
+          "rp": "40.2 h",
+          "rot_days": 1.6749,
+          "tilt": 5.7,
+          "temp": [
+            129,
+            177
+          ],
+          "atm": {
+            "N2": 59.7,
+            "CO2": 28.2,
+            "O2": 7.7,
+            "Ar": 2.6,
+            "CH4": 1.8
+          },
+          "pb": 3.36,
+          "teq": 116.5,
+          "tmean": 155.8,
+          "mag": "Yes",
+          "alb": 0.42,
+          "hab": 13,
+          "v": "Rust-tinted tundra and black escarpments with seasonal frost fields. Coriolis-driven circulation produces broad moving fronts. Strong auroral bands appear during particle storms.",
+          "sci": "The planet orbits outside the conservative habitable zone at 0.152 AU. Surface pressure (3.36 bar) and gravity (1.20 g) set cloud scale heights and convection efficiency. Non-synchronous rotation enables stronger zonal heat redistribution.",
+          "x": {
+            "h": "High",
+            "c": "Low",
+            "rv": "Moderate-high",
+            "tf": "Very high"
+          },
+          "locked": false
+        },
+        {
+          "n": "Rimegate",
+          "t": "Gas giant",
+          "m": [
+            1.51,
+            "Jupiter"
+          ],
+          "rad": [
+            1.09,
+            "Jupiter"
+          ],
+          "g": 3.23,
+          "a": 0.2393,
+          "op": 137.27,
+          "rp": "15.4 h",
+          "rot_days": 0.643,
+          "tilt": 4.0,
+          "temp": [
+            109,
+            155
+          ],
+          "atm": {
+            "H2": 85.3,
+            "He": 13.8,
+            "CH4": 0.6,
+            "NH3": 0.2,
+            "Traces": 0.1
+          },
+          "pb": 1,
+          "teq": 84.7,
+          "tmean": 134.7,
+          "mag": "Yes",
+          "alb": 0.59,
+          "hab": 0,
+          "v": "Burgundy and charcoal cloud bands with bright electrical storm cells. Coriolis-driven circulation produces broad moving fronts. Strong auroral bands appear during particle storms.",
+          "sci": "Orbital placement at 0.24 AU is beyond the frost line where volatile-rich cores can capture deep hydrogen-helium envelopes. Pressure values are reported at a 1 bar reference level, and gravity (3.23 g) reflects the mass-radius combination.",
+          "x": {
+            "h": "Extreme",
+            "c": "Moons only",
+            "rv": "Very high",
+            "tf": "N/A"
+          },
+          "locked": false
+        },
+        {
+          "n": "Tyr Vox",
+          "t": "Ice giant",
+          "m": [
+            0.28,
+            "Jupiter"
+          ],
+          "rad": [
+            0.65,
+            "Jupiter"
+          ],
+          "g": 1.68,
+          "a": 0.4232,
+          "op": 322.84,
+          "rp": "17.8 h",
+          "rot_days": 0.7421,
+          "tilt": 12.8,
+          "temp": [
+            64,
+            107
+          ],
+          "atm": {
+            "H2": 80.9,
+            "He": 16.0,
+            "CH4": 2.1,
+            "NH3": 0.5,
+            "H2S": 0.5
+          },
+          "pb": 1,
+          "teq": 62.4,
+          "tmean": 88.2,
+          "mag": "Yes",
+          "alb": 0.63,
+          "hab": 0,
+          "v": "Indigo cloud tops with a faint crimson limb glow and thin ring arcs. Coriolis-driven circulation produces broad moving fronts. Strong auroral bands appear during particle storms.",
+          "sci": "Orbital placement at 0.42 AU is beyond the frost line where volatile-rich cores can capture deep hydrogen-helium envelopes. Pressure values are reported at a 1 bar reference level, and gravity (1.68 g) reflects the mass-radius combination.",
+          "x": {
+            "h": "High",
+            "c": "Moons only",
+            "rv": "Very high",
+            "tf": "N/A"
+          },
+          "locked": false
+        },
+        {
+          "n": "Morrow Crown",
+          "t": "Ice giant",
+          "m": [
+            0.06,
+            "Jupiter"
+          ],
+          "rad": [
+            0.57,
+            "Jupiter"
+          ],
+          "g": 0.43,
+          "a": 0.8522,
+          "op": 922.56,
+          "rp": "8.5 h",
+          "rot_days": 0.354,
+          "tilt": 22.7,
+          "temp": [
+            30,
+            80
+          ],
+          "atm": {
+            "H2": 79.9,
+            "He": 17.0,
+            "CH4": 2.0,
+            "NH3": 0.5,
+            "H2S": 0.6
+          },
+          "pb": 1,
+          "teq": 44.9,
+          "tmean": 58.1,
+          "mag": "Yes",
+          "alb": 0.6,
+          "hab": 0,
+          "v": "Indigo cloud tops with a faint crimson limb glow and thin ring arcs. Coriolis-driven circulation produces broad moving fronts. Strong auroral bands appear during particle storms.",
+          "sci": "Orbital placement at 0.85 AU is beyond the frost line where volatile-rich cores can capture deep hydrogen-helium envelopes. Pressure values are reported at a 1 bar reference level, and gravity (0.43 g) reflects the mass-radius combination.",
+          "x": {
+            "h": "High",
+            "c": "Moons only",
+            "rv": "Very high",
+            "tf": "N/A"
+          },
+          "locked": false
+        }
+      ]
+    },
+    {
+      "id": "nyx-72",
+      "n": "Nyx-72",
+      "sector": "Razor Meridian",
+      "star": {
+        "cls": "M3V",
+        "tk": 2721,
+        "lum": 0.00147,
+        "age": 7.85,
+        "hz": [
+          0.036,
+          0.064
+        ],
+        "mult": "Single",
+        "frost": 0.186,
+        "belt": [
+          0.194,
+          0.24
+        ],
+        "m": 0.426
+      },
+      "tl": [
+        [
+          0,
+          "Molecular cloud collapse and protostar ignition."
+        ],
+        [
+          20,
+          "Rocky embryo growth and early orbital clearing."
+        ],
+        [
+          1727,
+          "Late accretion and migration damping."
+        ],
+        [
+          3532,
+          "Atmospheric restructuring and climate stabilization."
+        ],
+        [
+          7850,
+          "Present epoch with mature orbital architecture."
+        ]
+      ],
+      "p": [
+        {
+          "n": "Cauter",
+          "t": "Cold super-Earth",
+          "m": [
+            2.7,
+            "Earth"
+          ],
+          "rad": [
+            1.47,
+            "Earth"
+          ],
+          "g": 1.25,
+          "a": 0.0347,
+          "op": 3.62,
+          "rp": "3.6 d",
+          "rot_days": 3.6198,
+          "tilt": 4.4,
+          "temp": [
+            262,
+            353
+          ],
+          "atm": {
+            "N2": 69.6,
+            "CO2": 19.7,
+            "O2": 6.0,
+            "Ar": 3.0,
+            "CH4": 1.7
+          },
+          "pb": 4.2,
+          "teq": 266.1,
+          "tmean": 310.0,
+          "mag": "Yes",
+          "alb": 0.31,
+          "hab": 63,
+          "v": "Rust-tinted tundra and black escarpments with seasonal frost fields. Long-terminator weather corridors indicate synchronous rotation. Strong auroral bands appear during particle storms.",
+          "sci": "The planet orbits outside the conservative habitable zone at 0.035 AU. Surface pressure (4.20 bar) and gravity (1.25 g) set cloud scale heights and convection efficiency. Likely tidal locking reshapes day-night circulation.",
+          "x": {
+            "h": "Moderate",
+            "c": "Moderate",
+            "rv": "High",
+            "tf": "Moderate"
+          },
+          "locked": true
+        },
+        {
+          "n": "Umbra Dune",
+          "t": "Temperate terrestrial",
+          "m": [
+            1.39,
+            "Earth"
+          ],
+          "rad": [
+            0.83,
+            "Earth"
+          ],
+          "g": 2.02,
+          "a": 0.0637,
+          "op": 9.0,
+          "rp": "9.0 d",
+          "rot_days": 8.999,
+          "tilt": 5.1,
+          "temp": [
+            186,
+            256
+          ],
+          "atm": {
+            "N2": 72.0,
+            "O2": 23.9,
+            "Ar": 2.3,
+            "CO2": 0.9,
+            "H2O": 0.9
+          },
+          "pb": 2.2,
+          "teq": 194.9,
+          "tmean": 222.7,
+          "mag": "No",
+          "alb": 0.33,
+          "hab": 70,
+          "v": "Dark oceans and iron-rich continents with layered cloud decks. Long-terminator weather corridors indicate synchronous rotation. Aurora is weak due limited magnetospheric shielding.",
+          "sci": "The planet orbits inside the stellar habitable zone at 0.064 AU. Surface pressure (2.20 bar) and gravity (2.02 g) set cloud scale heights and convection efficiency. Likely tidal locking reshapes day-night circulation.",
+          "x": {
+            "h": "Moderate",
+            "c": "Moderate",
+            "rv": "High",
+            "tf": "Moderate"
+          },
+          "locked": true
+        },
+        {
+          "n": "Terminus Mare",
+          "t": "Cold super-Earth",
+          "m": [
+            1.61,
+            "Earth"
+          ],
+          "rad": [
+            1.28,
+            "Earth"
+          ],
+          "g": 0.99,
+          "a": 0.1047,
+          "op": 18.96,
+          "rp": "19.0 d",
+          "rot_days": 18.9555,
+          "tilt": 5.2,
+          "temp": [
+            132,
+            231
+          ],
+          "atm": {
+            "N2": 70.2,
+            "CO2": 19.6,
+            "O2": 5.3,
+            "Ar": 2.7,
+            "CH4": 2.2
+          },
+          "pb": 2.39,
+          "teq": 148.3,
+          "tmean": 184.0,
+          "mag": "No",
+          "alb": 0.4,
+          "hab": 28,
+          "v": "Rust-tinted tundra and black escarpments with seasonal frost fields. Long-terminator weather corridors indicate synchronous rotation. Aurora is weak due limited magnetospheric shielding.",
+          "sci": "The planet orbits outside the conservative habitable zone at 0.105 AU. Surface pressure (2.39 bar) and gravity (0.99 g) set cloud scale heights and convection efficiency. Likely tidal locking reshapes day-night circulation.",
+          "x": {
+            "h": "Moderate-high",
+            "c": "Low-moderate",
+            "rv": "High",
+            "tf": "High"
+          },
+          "locked": true
+        },
+        {
+          "n": "Redline Tundra",
+          "t": "Cold super-Earth",
+          "m": [
+            1.74,
+            "Earth"
+          ],
+          "rad": [
+            1.51,
+            "Earth"
+          ],
+          "g": 0.77,
+          "a": 0.1758,
+          "op": 41.24,
+          "rp": "2.3 d",
+          "rot_days": 2.3234,
+          "tilt": 23.8,
+          "temp": [
+            99,
+            168
+          ],
+          "atm": {
+            "N2": 66.6,
+            "CO2": 22.0,
+            "O2": 6.5,
+            "Ar": 2.6,
+            "CH4": 2.3
+          },
+          "pb": 1.63,
+          "teq": 112.0,
+          "tmean": 137.4,
+          "mag": "Yes",
+          "alb": 0.45,
+          "hab": 23,
+          "v": "Rust-tinted tundra and black escarpments with seasonal frost fields. Coriolis-driven circulation produces broad moving fronts. Strong auroral bands appear during particle storms.",
+          "sci": "The planet orbits outside the conservative habitable zone at 0.176 AU. Surface pressure (1.63 bar) and gravity (0.77 g) set cloud scale heights and convection efficiency. Non-synchronous rotation enables stronger zonal heat redistribution.",
+          "x": {
+            "h": "High",
+            "c": "Low",
+            "rv": "Moderate-high",
+            "tf": "Very high"
+          },
+          "locked": false
+        },
+        {
+          "n": "Gravemantle",
+          "t": "Gas giant",
+          "m": [
+            0.27,
+            "Jupiter"
+          ],
+          "rad": [
+            0.92,
+            "Jupiter"
+          ],
+          "g": 0.81,
+          "a": 0.3453,
+          "op": 113.53,
+          "rp": "15.4 h",
+          "rot_days": 0.6421,
+          "tilt": 1.8,
+          "temp": [
+            79,
+            122
+          ],
+          "atm": {
+            "H2": 85.2,
+            "He": 13.9,
+            "CH4": 0.6,
+            "NH3": 0.2,
+            "Traces": 0.1
+          },
+          "pb": 1,
+          "teq": 74.6,
+          "tmean": 103.2,
+          "mag": "Yes",
+          "alb": 0.58,
+          "hab": 0,
+          "v": "Burgundy and charcoal cloud bands with bright electrical storm cells. Coriolis-driven circulation produces broad moving fronts. Strong auroral bands appear during particle storms.",
+          "sci": "Orbital placement at 0.35 AU is beyond the frost line where volatile-rich cores can capture deep hydrogen-helium envelopes. Pressure values are reported at a 1 bar reference level, and gravity (0.81 g) reflects the mass-radius combination.",
+          "x": {
+            "h": "Extreme",
+            "c": "Moons only",
+            "rv": "Very high",
+            "tf": "N/A"
+          },
+          "locked": false
+        },
+        {
+          "n": "Kestrel Deep",
+          "t": "Ice giant",
+          "m": [
+            0.29,
+            "Jupiter"
+          ],
+          "rad": [
+            0.58,
+            "Jupiter"
+          ],
+          "g": 2.16,
+          "a": 0.502,
+          "op": 199.07,
+          "rp": "8.9 h",
+          "rot_days": 0.3719,
+          "tilt": 2.6,
+          "temp": [
+            71,
+            106
+          ],
+          "atm": {
+            "H2": 80.4,
+            "He": 16.7,
+            "CH4": 1.9,
+            "NH3": 0.5,
+            "H2S": 0.5
+          },
+          "pb": 1,
+          "teq": 61.3,
+          "tmean": 90.3,
+          "mag": "Yes",
+          "alb": 0.59,
+          "hab": 0,
+          "v": "Indigo cloud tops with a faint crimson limb glow and thin ring arcs. Coriolis-driven circulation produces broad moving fronts. Strong auroral bands appear during particle storms.",
+          "sci": "Orbital placement at 0.50 AU is beyond the frost line where volatile-rich cores can capture deep hydrogen-helium envelopes. Pressure values are reported at a 1 bar reference level, and gravity (2.16 g) reflects the mass-radius combination.",
+          "x": {
+            "h": "High",
+            "c": "Moons only",
+            "rv": "Very high",
+            "tf": "N/A"
+          },
+          "locked": false
+        }
+      ]
+    }
+  ],
+  "topics": [
+    "Stellar class and luminosity scaling",
+    "M-dwarf tidal locking climate models",
+    "Atmospheric escape and magnetic shielding",
+    "Frost line and giant planet formation",
+    "Mass-radius-density interpretation",
+    "Orbital resonance stability",
+    "Radiation mitigation architecture",
+    "Terraforming energy budgets",
+    "Planetary climate forcing",
+    "System formation chronology",
+    "Exomoon tidal heating",
+    "Internal physics validation protocol"
+  ],
+  "meta": {
+    "seed": 42,
+    "generator": "galaxy.data_pipeline",
+    "version": 1
+  }
+}
