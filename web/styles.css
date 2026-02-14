@@ -831,6 +831,92 @@ body.scan-active .scan-fill {
   animation: warpPulse 3.8s ease-in-out infinite;
 }
 
+.inline-link {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.detail-shell {
+  display: grid;
+  gap: 14px;
+}
+
+.detail-page .detail-header,
+.detail-page .detail-section {
+  padding: 14px;
+}
+
+.detail-actions {
+  margin-top: 12px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.detail-stats {
+  margin-top: 10px;
+  border: 1px solid rgba(255, 58, 58, 0.24);
+  border-radius: 10px;
+  padding: 10px;
+  background: rgba(14, 8, 10, 0.7);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 8px;
+}
+
+.detail-stats.compact {
+  margin-top: 8px;
+}
+
+.detail-stats p {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.detail-card-grid {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.detail-card {
+  border: 1px solid rgba(255, 64, 64, 0.26);
+  border-radius: 10px;
+  background: linear-gradient(140deg, rgba(18, 9, 13, 0.82), rgba(8, 8, 11, 0.86));
+  padding: 12px;
+}
+
+.detail-card h3 {
+  margin-bottom: 6px;
+}
+
+.detail-card p {
+  margin: 6px 0;
+}
+
+.orbit-page-canvas {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 40, 40, 0.26);
+  background: radial-gradient(circle at 50% 40%, rgba(34, 10, 12, 0.45), rgba(3, 3, 4, 0.95));
+}
+
+.planet-detail-grid,
+.planet-narrative {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
 @keyframes nebulaDrift {
   from {
     transform: translate3d(0, 0, 0) scale(1);
@@ -928,5 +1014,10 @@ body.scan-active .scan-fill {
 
   .planet-focus-grid {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .detail-actions {
+    flex-direction: column;
+    align-items: stretch;
   }
 }

@@ -97,6 +97,7 @@ const state = {
   ot: 0,
   pointer: { x: 0, y: 0, active: false },
   hoverNode: -1,
+  galaxyNodes: [],
   stars: [],
   orbit: {
     planets: [],
@@ -153,6 +154,48 @@ const planetByKey = new Map();
 
 function pk(sysId, pName) {
   return `${sysId}::${pName}`;
+}
+
+function slugify(value) {
+  return String(value || "")
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function sectorToken(sector) {
+  return slugify(sector.id || sector.n);
+}
+
+function planetToken(sysId, pName) {
+  return `${slugify(sysId)}-${slugify(pName)}`;
+}
+
+function sectorUrl(sector) {
+  return `./sector.html?sector=${encodeURIComponent(sectorToken(sector))}`;
+}
+
+function systemUrl(systemId) {
+  return `./system.html?system=${encodeURIComponent(systemId)}`;
+}
+
+function planetUrl(systemId, planetName) {
+  const token = planetToken(systemId, planetName);
+  return `./planet.html?planet=${encodeURIComponent(token)}&system=${encodeURIComponent(systemId)}`;
+}
+
+function pickGalaxyNode(x, y) {
+  let hit = null;
+  let best = Number.POSITIVE_INFINITY;
+  for (const node of state.galaxyNodes) {
+    const dist = Math.hypot(node.px - x, node.py - y);
+    if (dist <= node.radius && dist < best) {
+      hit = node;
+      best = dist;
+    }
+  }
+  return hit;
 }
 
 function rebuildIndexesFromData() {
@@ -339,6 +382,14 @@ function initCanvasInteraction() {
   canvas.addEventListener("mouseleave", () => {
     state.pointer.active = false;
     state.hoverNode = -1;
+    d.gcv.style.cursor = "default";
+  });
+  canvas.addEventListener("click", (ev) => {
+    const p = canvasPoint(ev, canvas);
+    const hit = pickGalaxyNode(p.x, p.y);
+    if (hit) {
+      window.location.href = hit.url;
+    }
   });
 
   d.ocv.addEventListener("mousemove", (ev) => {
@@ -354,8 +405,8 @@ function initCanvasInteraction() {
   d.ocv.addEventListener("click", (ev) => {
     const p = canvasPoint(ev, d.ocv);
     const hit = pickOrbitPlanet(p.x, p.y);
-    if (hit) {
-      setOrbitFocus(hit.key);
+    if (hit && hit.sysId && hit.planetName) {
+      window.location.href = planetUrl(hit.sysId, hit.planetName);
       return;
     }
     clearOrbitFocus();
@@ -396,6 +447,9 @@ function renderSectors() {
       <p class="threat-badge">Threat Level ${s.t}</p>
       <p><span class="muted">Notable Systems:</span> ${s.s.join(", ")}</p>
       <div class="mini-map"></div>
+      <div class="card-actions">
+        <a class="ghost-btn inline-link" href="${sectorUrl(s)}">Open Sector Page</a>
+      </div>
     `;
     d.sectorGrid.append(card);
   }
@@ -497,6 +551,7 @@ function renderRegistry(s) {
       <div class="planet-actions">
         <label><input class="cmp" type="checkbox" ${checked} />Compare</label>
         <button class="ghost-btn scan-one" type="button">Scan Atmosphere</button>
+        <a class="ghost-btn inline-link" href="${planetUrl(s.id, p.n)}">Open Planet Page</a>
       </div>
       <p class="section-label">DATA PANEL</p>
       <div class="planet-grid">
@@ -781,6 +836,15 @@ function drawGalaxy() {
   }
 
   const nodes = DATA.sectors.map((s) => ({ s, px: cx + s.c[0] * w * 0.78, py: cy + s.c[1] * h * 0.78 }));
+  state.galaxyNodes = nodes.map((node) => ({
+    id: sectorToken(node.s),
+    type: "sector",
+    px: node.px,
+    py: node.py,
+    radius: 42,
+    url: sectorUrl(node.s),
+    sector: node.s
+  }));
   let hoveredNode = -1;
   let bestDistance = Number.POSITIVE_INFINITY;
   if (state.pointer.active) {
@@ -795,25 +859,28 @@ function drawGalaxy() {
     }
   }
   state.hoverNode = hoveredNode;
+  d.gcv.style.cursor = state.hoverNode >= 0 ? "pointer" : "default";
 
   if (state.routes) {
     x.setLineDash([8, 8]);
     x.lineDashOffset = -(state.gt * 0.02);
-    x.lineWidth = 1.1;
     for (let i = 0; i < ROUTE_EDGES.length; i += 1) {
       const [a, b] = ROUTE_EDGES[i];
+      const linked = state.hoverNode >= 0 && (state.hoverNode === a || state.hoverNode === b);
+      const pulse = 0.5 + 0.5 * Math.sin(state.gt * 0.0017 + i * 1.3);
+      const routeAlpha = 0.16 + 0.17 * pulse + (linked ? 0.24 : 0);
       x.beginPath();
       x.moveTo(nodes[a].px, nodes[a].py);
       x.lineTo(nodes[b].px, nodes[b].py);
-      const routeAlpha = 0.16 + 0.17 * (0.5 + 0.5 * Math.sin(state.gt * 0.0017 + i * 1.3));
       x.strokeStyle = `rgba(255,64,64,${routeAlpha.toFixed(3)})`;
+      x.lineWidth = linked ? 1.9 : 1.1;
       x.stroke();
 
       const phase = (state.gt * 0.00024 + i * 0.17) % 1;
       const tx = nodes[a].px + (nodes[b].px - nodes[a].px) * phase;
       const ty = nodes[a].py + (nodes[b].py - nodes[a].py) * phase;
       x.beginPath();
-      x.arc(tx, ty, 1.9, 0, Math.PI * 2);
+      x.arc(tx, ty, linked ? 2.4 : 1.9, 0, Math.PI * 2);
       x.fillStyle = "rgba(255,140,140,.78)";
       x.shadowColor = "rgba(255, 110, 110, .65)";
       x.shadowBlur = 7;
@@ -849,6 +916,47 @@ function drawGalaxy() {
     x.fillStyle = "rgba(255,210,210,.92)";
     x.font = "13px Orbitron";
     x.fillText(node.s.n.toUpperCase(), node.px + 10, node.py - 12);
+  }
+
+  const hoveredSector = state.hoverNode >= 0 ? nodes[state.hoverNode].s : null;
+  if (hoveredSector) {
+    const stats = [
+      hoveredSector.n.toUpperCase(),
+      `STAR DENSITY ${hoveredSector.d}`,
+      `THREAT ${hoveredSector.t}`,
+      `RADIATION ${hoveredSector.r}`,
+      `SYSTEMS ${DATA.systems.filter((s) => s.sector === hoveredSector.n).length}`
+    ];
+    x.save();
+    x.font = "12px Share Tech Mono";
+    let width = 0;
+    for (const line of stats) {
+      width = Math.max(width, x.measureText(line).width);
+    }
+    const padX = 12;
+    const padY = 9;
+    const lineH = 16;
+    const boxW = width + padX * 2;
+    const boxH = stats.length * lineH + padY * 2;
+    const anchor = nodes[state.hoverNode];
+    const boxX = clamp(anchor.px + 18, 16, w - boxW - 16);
+    const boxY = clamp(anchor.py - boxH - 14, 16, h - boxH - 16);
+    x.fillStyle = "rgba(11,7,10,0.88)";
+    x.strokeStyle = "rgba(255,88,88,0.42)";
+    x.lineWidth = 1;
+    x.beginPath();
+    if (typeof x.roundRect === "function") {
+      x.roundRect(boxX, boxY, boxW, boxH, 8);
+    } else {
+      x.rect(boxX, boxY, boxW, boxH);
+    }
+    x.fill();
+    x.stroke();
+    x.fillStyle = "rgba(255,218,218,0.95)";
+    for (let i = 0; i < stats.length; i += 1) {
+      x.fillText(stats[i], boxX + padX, boxY + padY + (i + 1) * lineH - 4);
+    }
+    x.restore();
   }
 
   const core = x.createRadialGradient(cx, cy, 0, cx, cy, 62 + Math.sin(state.gt * 0.002) * 9);
@@ -1004,6 +1112,8 @@ function drawOrbit() {
 
   state.orbit.planets = planets.map((p) => ({
     key: p.key,
+    sysId: s.id,
+    planetName: p.p.n,
     sx: p.px * z + panX,
     sy: p.py * z + panY,
     sr: p.r * z

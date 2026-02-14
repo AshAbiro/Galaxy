@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Galaxy Planet</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="detail-page">
+    <div class="bg-layer layer-nebula"></div>
+    <div class="bg-layer layer-grid"></div>
+    <div class="bg-layer layer-noise"></div>
+    <div class="scanline-overlay"></div>
+
+    <main class="app-shell detail-shell">
+      <header class="panel detail-header">
+        <p class="tag">PLANET DOSSIER</p>
+        <h1 id="planetName">Loading Planet...</h1>
+        <p id="planetMeta" class="muted">Reading biosphere and orbital telemetry.</p>
+        <div class="detail-actions">
+          <a id="jumpSystemLink" class="danger-btn inline-link" href="./index.html">Jump to System</a>
+          <a id="jumpSectorLink" class="ghost-btn inline-link" href="./index.html">Jump to Sector</a>
+          <a class="ghost-btn inline-link" href="./index.html">Back to Command View</a>
+        </div>
+      </header>
+
+      <section class="panel detail-section">
+        <div class="panel-head">
+          <h2>Planet Data Panel</h2>
+          <p>Physical metrics, atmosphere, and mission viability signals.</p>
+        </div>
+        <div id="planetStats" class="planet-detail-grid"></div>
+      </section>
+
+      <section class="panel detail-section">
+        <div class="panel-head">
+          <h2>Scientific Notes</h2>
+        </div>
+        <div id="planetNarrative" class="planet-narrative"></div>
+      </section>
+    </main>
+
+    <script src="./planet-page.js"></script>
+  </body>
+</html>

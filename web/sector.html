@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Galaxy Sector</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="detail-page">
+    <div class="bg-layer layer-nebula"></div>
+    <div class="bg-layer layer-grid"></div>
+    <div class="bg-layer layer-noise"></div>
+    <div class="scanline-overlay"></div>
+
+    <main class="app-shell detail-shell">
+      <header class="panel detail-header">
+        <p class="tag">SECTOR DOSSIER</p>
+        <h1 id="sectorName">Loading Sector...</h1>
+        <p id="sectorMeta" class="muted">Fetching tactical telemetry.</p>
+        <div id="sectorStats" class="detail-stats"></div>
+        <div class="detail-actions">
+          <a class="ghost-btn inline-link" href="./index.html">Back to Command View</a>
+        </div>
+      </header>
+
+      <section class="panel detail-section">
+        <div class="panel-head">
+          <h2>Systems In Sector</h2>
+          <p>Click a system to open its orbital command page.</p>
+        </div>
+        <div id="sectorSystems" class="detail-card-grid"></div>
+      </section>
+    </main>
+
+    <script src="./sector-page.js"></script>
+  </body>
+</html>

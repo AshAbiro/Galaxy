@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Galaxy System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700&family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body class="detail-page">
+    <div class="bg-layer layer-nebula"></div>
+    <div class="bg-layer layer-grid"></div>
+    <div class="bg-layer layer-noise"></div>
+    <div class="scanline-overlay"></div>
+
+    <main class="app-shell detail-shell">
+      <header class="panel detail-header">
+        <p class="tag">SYSTEM COMMAND PAGE</p>
+        <h1 id="systemName">Loading System...</h1>
+        <p id="systemMeta" class="muted">Fetching orbital architecture.</p>
+        <div id="systemStats" class="detail-stats"></div>
+        <div class="detail-actions">
+          <a id="backSectorLink" class="ghost-btn inline-link" href="./index.html">Back to Sector</a>
+          <a class="ghost-btn inline-link" href="./index.html">Back to Command View</a>
+        </div>
+      </header>
+
+      <section class="panel detail-section">
+        <div class="panel-head">
+          <h2>Orbital Diagram</h2>
+          <p>Click any planet node to open its dedicated planet page.</p>
+        </div>
+        <canvas id="systemOrbitCanvas" class="orbit-page-canvas" width="1200" height="620" aria-label="System orbit map"></canvas>
+      </section>
+
+      <section class="panel detail-section">
+        <div class="panel-head">
+          <h2>Planet Registry</h2>
+          <p>All planets in this system with direct links.</p>
+        </div>
+        <div id="systemPlanets" class="detail-card-grid"></div>
+      </section>
+    </main>
+
+    <script src="./system-page.js"></script>
+  </body>
+</html>
