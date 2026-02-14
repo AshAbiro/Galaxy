@@ -95,6 +95,7 @@ const state = {
   compare: new Set(),
   gt: 0,
   ot: 0,
+  frameTs: null,
   pointer: { x: 0, y: 0, active: false },
   hoverNode: -1,
   galaxyNodes: [],
@@ -103,6 +104,10 @@ const state = {
     planets: [],
     hoverKey: null,
     focusKey: null,
+    simMs: 0,
+    ramp: 0,
+    beltBySystem: {},
+    elementsBySystem: {},
     zoom: { current: 1, target: 1 },
     pan: { x: 0, y: 0, tx: 0, ty: 0 }
   }
@@ -234,6 +239,10 @@ function setRuntimeData(payload) {
   state.orbit.planets = [];
   state.orbit.hoverKey = null;
   state.orbit.focusKey = null;
+  state.orbit.simMs = 0;
+  state.orbit.ramp = 0;
+  state.orbit.beltBySystem = {};
+  state.orbit.elementsBySystem = {};
   state.orbit.zoom.current = 1;
   state.orbit.zoom.target = 1;
   state.orbit.pan.x = 0;
@@ -267,6 +276,85 @@ const lerp = (a, b, t) => a + (b - a) * t;
 const rand = (a, b) => a + Math.random() * (b - a);
 const meanT = (p) => (p.temp[0] + p.temp[1]) / 2;
 const atmText = (atm) => Object.entries(atm).map(([g, v]) => `${g} ${v}%`).join(", ");
+const smooth = (t) => t * t * (3 - 2 * t);
+
+function orbitDurationSeconds(normDist) {
+  const nDist = clamp(normDist, 0, 1);
+  return 95 + 40 * nDist + 225 * nDist * nDist;
+}
+
+function hash32(text) {
+  let h = 2166136261;
+  for (let i = 0; i < text.length; i += 1) {
+    h ^= text.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return h >>> 0;
+}
+
+function hashUnit(text) {
+  return hash32(text) / 4294967295;
+}
+
+function solveKepler(meanAnomaly, eccentricity) {
+  const tau = Math.PI * 2;
+  let m = meanAnomaly % tau;
+  if (m < -Math.PI) m += tau;
+  if (m > Math.PI) m -= tau;
+  let e = eccentricity < 0.8 ? m : Math.PI;
+  for (let i = 0; i < 6; i += 1) {
+    const f = e - eccentricity * Math.sin(e) - m;
+    const fp = 1 - eccentricity * Math.cos(e);
+    e -= f / Math.max(fp, 1e-6);
+  }
+  return e;
+}
+
+function getOrbitElements(systemId, planetType, planetName) {
+  if (!state.orbit.elementsBySystem[systemId]) {
+    const sysSeed = hashUnit(`${systemId}:inclination`);
+    state.orbit.elementsBySystem[systemId] = {
+      _inclination: 0.74 + sysSeed * 0.20
+    };
+  }
+  const cache = state.orbit.elementsBySystem[systemId];
+  const key = `${planetName}`;
+  if (!cache[key]) {
+    const seed = `${systemId}:${planetName}`;
+    const giant = /giant/i.test(planetType);
+    const eMin = giant ? 0.01 : 0.005;
+    const eMax = giant ? 0.09 : 0.16;
+    cache[key] = {
+      eccentricity: eMin + hashUnit(`${seed}:e`) * (eMax - eMin),
+      omega: hashUnit(`${seed}:omega`) * Math.PI * 2,
+      phase: hashUnit(`${seed}:phase`) * Math.PI * 2
+    };
+  }
+  return {
+    ...cache[key],
+    inclination: cache._inclination
+  };
+}
+
+function resetOrbitRamp() {
+  state.orbit.ramp = 0;
+}
+
+function getBeltParticles(systemId, innerRadius, outerRadius) {
+  if (!state.orbit.beltBySystem[systemId]) {
+    const points = [];
+    for (let i = 0; i < 260; i += 1) {
+      points.push({
+        angle: Math.random() * Math.PI * 2,
+        radius: rand(innerRadius, outerRadius),
+        drift: rand(-0.0000014, 0.0000014),
+        alpha: rand(0.12, 0.32)
+      });
+    }
+    state.orbit.beltBySystem[systemId] = points;
+  }
+  return state.orbit.beltBySystem[systemId];
+}
 
 function syncScanVisualState() {
   document.body.classList.toggle("scan-active", state.scanOn);
@@ -493,12 +581,16 @@ function ensureScanKey() {
 
 function renderSystemList() {
   const list = filteredSystems();
+  const previousSystemId = state.systemId;
   d.sysList.innerHTML = "";
   if (!list.length) {
     d.sysList.innerHTML = `<p class="muted">No systems match current filters.</p>`;
     return;
   }
   if (!list.find((s) => s.id === state.systemId)) state.systemId = list[0].id;
+  if (state.systemId !== previousSystemId) {
+    resetOrbitRamp();
+  }
   for (const s of list) {
     const sec = sectorByName.get(s.sector);
     const bestHab = Math.max(...s.p.map((p) => p.hab));
@@ -514,6 +606,9 @@ function renderSystemList() {
       <p><span class="muted">Sector Radiation:</span> ${sec.r}</p>
     `;
     item.addEventListener("click", () => {
+      if (state.systemId !== s.id) {
+        resetOrbitRamp();
+      }
       state.systemId = s.id;
       ensureScanKey();
       renderSystemList();
@@ -968,9 +1063,14 @@ function drawGalaxy() {
   x.arc(cx, cy, 84, 0, Math.PI * 2);
   x.fill();
 }
-function drawOrbit() {
+function drawOrbit(deltaMs = 16) {
   const s = systemById.get(state.systemId);
   if (!s) return;
+  const dt = clamp(deltaMs, 0, 120);
+  state.orbit.ramp = clamp(state.orbit.ramp + dt / 2000, 0, 1);
+  const rampGain = smooth(state.orbit.ramp);
+  state.orbit.simMs += dt * rampGain;
+  state.ot = state.orbit.simMs;
   const c = d.ocv;
   const x = c.getContext("2d");
   const w = c.width;
@@ -987,21 +1087,40 @@ function drawOrbit() {
   x.fillRect(0, 0, w, h);
 
   const far = Math.max(...s.p.map((p) => p.a), s.star.frost, s.star.belt[1]);
+  const innerA = Math.min(...s.p.map((p) => p.a));
+  const outerA = Math.max(...s.p.map((p) => p.a));
+  const spanA = Math.max(outerA - innerA, 0.001);
   const scale = (dist) => 48 + (Math.log(dist + 1) / Math.log(far + 1)) * (maxR - 48);
   const planets = s.p.map((p, i) => {
     const or = scale(p.a);
-    const speed = 240 / p.op;
-    const a = state.ot * 0.0014 * speed + i * 0.6;
-    const px = cx + Math.cos(a) * or;
-    const py = cy + Math.sin(a) * or;
-    const r = 2.8 + p.m[0] * (p.m[1] === "Jupiter" ? 1.6 : 0.7);
+    const elements = getOrbitElements(s.id, p.t, p.n);
+    const normDist = clamp((p.a - innerA) / spanA, 0, 1);
+    const orbitSeconds = orbitDurationSeconds(normDist);
+    const meanAnomaly = (state.orbit.simMs / 1000) * ((Math.PI * 2) / orbitSeconds) + elements.phase + i * 0.01;
+    const eccentricAnomaly = solveKepler(meanAnomaly, elements.eccentricity);
+    const cosE = Math.cos(eccentricAnomaly);
+    const sinE = Math.sin(eccentricAnomaly);
+    const semiMinor = or * Math.sqrt(1 - elements.eccentricity ** 2) * elements.inclination;
+    const xFocus = or * (cosE - elements.eccentricity);
+    const yFocus = semiMinor * sinE;
+    const cosW = Math.cos(elements.omega);
+    const sinW = Math.sin(elements.omega);
+    const px = cx + (xFocus * cosW) - (yFocus * sinW);
+    const py = cy + (xFocus * sinW) + (yFocus * cosW);
+    const depth = clamp((yFocus / Math.max(1e-6, semiMinor) + 1) * 0.5, 0, 1);
+    const depthScale = 0.86 + depth * 0.28;
+    const r = (2.8 + p.m[0] * (p.m[1] === "Jupiter" ? 1.6 : 0.7)) * depthScale;
     return {
       key: pk(s.id, p.n),
       p,
       or,
+      e: elements.eccentricity,
+      omega: elements.omega,
+      semiMinor,
       px,
       py,
-      r
+      r,
+      depth
     };
   });
 
@@ -1046,12 +1165,13 @@ function drawOrbit() {
 
   const b0 = scale(s.star.belt[0]);
   const b1 = scale(s.star.belt[1]);
-  const beltDot = 1.2 / z;
-  for (let i = 0; i < 280; i += 1) {
-    const ang = Math.random() * Math.PI * 2;
-    const rr = rand(b0, b1);
-    x.fillStyle = "rgba(255,110,110,.17)";
-    x.fillRect(cx + Math.cos(ang) * rr, cy + Math.sin(ang) * rr, beltDot, beltDot);
+  const beltDot = 1.05 / z;
+  const belt = getBeltParticles(s.id, b0, b1);
+  for (const grain of belt) {
+    const ang = grain.angle + state.orbit.simMs * grain.drift;
+    const pulse = 0.7 + 0.3 * Math.sin(state.orbit.simMs * 0.00015 + grain.angle);
+    x.fillStyle = `rgba(255,110,110,${(grain.alpha * pulse).toFixed(3)})`;
+    x.fillRect(cx + Math.cos(ang) * grain.radius, cy + Math.sin(ang) * grain.radius, beltDot, beltDot);
   }
 
   for (const planet of planets) {
@@ -1059,26 +1179,33 @@ function drawOrbit() {
     const isFocus = planet.key === state.orbit.focusKey;
     const labelOn = !state.orbit.focusKey || isHover || isFocus;
 
+    x.save();
+    x.translate(cx, cy);
+    x.rotate(planet.omega);
     x.beginPath();
-    x.arc(cx, cy, planet.or, 0, Math.PI * 2);
+    x.ellipse(-planet.or * planet.e, 0, planet.or, planet.semiMinor, 0, 0, Math.PI * 2);
     x.strokeStyle = "rgba(255,26,26,.22)";
     x.lineWidth = (isFocus ? 1.5 : 1) / z;
     x.stroke();
 
     if (isFocus) {
       x.beginPath();
-      x.arc(cx, cy, planet.or + 2.8 / z, 0, Math.PI * 2);
+      x.ellipse(-planet.or * planet.e, 0, planet.or + 2.8 / z, planet.semiMinor + 2.8 / z, 0, 0, Math.PI * 2);
       x.strokeStyle = "rgba(255,130,130,.32)";
       x.lineWidth = 1 / z;
       x.stroke();
     }
+    x.restore();
 
     const r = planet.r + (isHover ? 1 : 0) + (isFocus ? 1.8 : 0);
     x.beginPath();
     x.arc(planet.px, planet.py, r, 0, Math.PI * 2);
-    x.fillStyle = planet.p.m[1] === "Jupiter" ? "rgba(255,120,120,.9)" : "rgba(255,66,66,.92)";
+    const heat = Math.round(78 + planet.depth * 62);
+    x.fillStyle = planet.p.m[1] === "Jupiter" ? `rgba(255,${heat + 18},${heat + 18},.92)` : `rgba(255,${heat},${heat},.92)`;
     x.shadowColor = "rgba(255,26,26,.75)";
-    x.shadowBlur = (isFocus ? 18 : 10) / z;
+    x.shadowBlur = (isFocus ? 19 : 10 + planet.depth * 5) / z;
+    x.shadowOffsetX = ((planet.depth - 0.5) * 3) / z;
+    x.shadowOffsetY = ((0.5 - planet.depth) * 2.4) / z;
     x.fill();
 
     if (isFocus || isHover) {
@@ -1090,13 +1217,16 @@ function drawOrbit() {
     }
 
     if (labelOn) {
-      x.fillStyle = "rgba(255,220,220,.74)";
+      x.fillStyle = `rgba(255,220,220,${(0.52 + planet.depth * 0.38).toFixed(3)})`;
       x.font = `${11 / z}px Share Tech Mono`;
       x.fillText(planet.p.n, planet.px + r + 5 / z, planet.py - 4 / z);
     }
   }
+  x.shadowBlur = 0;
+  x.shadowOffsetX = 0;
+  x.shadowOffsetY = 0;
 
-  const flicker = 28 + Math.sin(state.ot * 0.012) * 2 + Math.sin(state.ot * 0.02) * 1.2;
+  const flicker = 28 + Math.sin(state.ot * 0.0011) * 2 + Math.sin(state.ot * 0.0017) * 1.2;
   const core = x.createRadialGradient(cx, cy, 0, cx, cy, flicker);
   core.addColorStop(0, "rgba(255,230,230,1)");
   core.addColorStop(0.3, "rgba(255,80,80,.95)");
@@ -1121,7 +1251,7 @@ function drawOrbit() {
 
   const focusHud = state.orbit.planets.find((p) => p.key === state.orbit.focusKey);
   if (focusHud) {
-    const pulse = 18 + Math.sin(state.ot * 0.01) * 3;
+    const pulse = 18 + Math.sin(state.ot * 0.0012) * 2.3;
     x.strokeStyle = "rgba(255,170,170,.6)";
     x.lineWidth = 1;
     x.beginPath();
@@ -1133,11 +1263,15 @@ function drawOrbit() {
   }
 }
 
-function anim() {
-  state.gt += 16;
-  state.ot += 16;
+function anim(ts) {
+  if (state.frameTs === null) {
+    state.frameTs = ts;
+  }
+  const dt = clamp(ts - state.frameTs, 0, 120);
+  state.frameTs = ts;
+  state.gt += dt * 0.18;
   drawGalaxy();
-  drawOrbit();
+  drawOrbit(dt);
   requestAnimationFrame(anim);
 }
 
@@ -1154,9 +1288,11 @@ function init() {
   renderSystemList();
   renderSystem();
   renderCompare();
+  state.frameTs = null;
+  resetOrbitRamp();
   d.habValue.textContent = d.habFilter.value;
   d.routeBtn.textContent = "Hide Routes";
-  anim();
+  requestAnimationFrame(anim);
 }
 
 async function bootstrap() {
