@@ -26,8 +26,7 @@ The project is configured for Vercel's Python runtime with Flask:
 
 - Flask entrypoint: `app.py`
 - Health endpoint: `/api/health`
-- Static assets served from `public/` on Vercel
-- Vercel build hook: `python scripts/sync_public.py` (copies `web/` to `public/`)
+- Static assets served directly from `web/` by Flask routes
 
 Deploy:
 
@@ -40,7 +39,6 @@ vercel --prod
 For local Vercel preview:
 
 ```bash
-python scripts/sync_public.py
 vercel dev
 ```
 
@@ -50,7 +48,6 @@ Generate astrophysics-grounded JSON for the web layer:
 
 ```bash
 galaxy-data generate --output web/galaxy-data.json --seed 42 --strict
-python scripts/sync_public.py
 ```
 
 The website bootstraps from `web/galaxy-data.json` at runtime (with embedded fallback if the file is unavailable).
@@ -72,4 +69,3 @@ Model notes:
 - `tests/` - automated tests
 - `web/` - cyberpunk galaxy exploration website
 - `app.py` - Flask entrypoint for Vercel
-- `scripts/sync_public.py` - build sync from `web/` to `public/`

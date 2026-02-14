@@ -29,6 +29,3 @@ where = ["src"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-
-[tool.vercel.scripts]
-build = "python scripts/sync_public.py"

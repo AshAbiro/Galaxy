@@ -17,18 +17,25 @@ def load_root_app():
 app = load_root_app()
 
 
-def test_root_redirects_to_index() -> None:
+def test_root_serves_index() -> None:
     client = app.test_client()
     response = client.get("/")
-    assert response.status_code == 307
-    assert response.headers["Location"] == "/index.html"
+    assert response.status_code == 200
+    assert b"<!doctype html>" in response.data
 
 
-def test_legacy_web_path_redirects_to_root_assets() -> None:
+def test_root_asset_serves_app_js() -> None:
+    client = app.test_client()
+    response = client.get("/app.js")
+    assert response.status_code == 200
+    assert b"const DATA =" in response.data
+
+
+def test_legacy_web_path_serves_assets() -> None:
     client = app.test_client()
     response = client.get("/web/app.js")
-    assert response.status_code == 307
-    assert response.headers["Location"] == "/app.js"
+    assert response.status_code == 200
+    assert b"const DATA =" in response.data
 
 
 def test_health_endpoint() -> None:
