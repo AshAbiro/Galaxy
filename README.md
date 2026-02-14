@@ -20,12 +20,37 @@ python -m http.server 8000
 
 Then open `http://localhost:8000/web/` in your browser.
 
+## Vercel + Flask deployment
+
+The project is configured for Vercel's Python runtime with Flask:
+
+- Flask entrypoint: `app.py`
+- Health endpoint: `/api/health`
+- Static assets served from `public/` on Vercel
+- Vercel build hook: `python scripts/sync_public.py` (copies `web/` to `public/`)
+
+Deploy:
+
+```bash
+pip install -r requirements.txt
+vercel
+vercel --prod
+```
+
+For local Vercel preview:
+
+```bash
+python scripts/sync_public.py
+vercel dev
+```
+
 ## Data generator + validator
 
 Generate astrophysics-grounded JSON for the web layer:
 
 ```bash
 galaxy-data generate --output web/galaxy-data.json --seed 42 --strict
+python scripts/sync_public.py
 ```
 
 The website bootstraps from `web/galaxy-data.json` at runtime (with embedded fallback if the file is unavailable).
@@ -46,3 +71,5 @@ Model notes:
 - `src/galaxy/` - application package
 - `tests/` - automated tests
 - `web/` - cyberpunk galaxy exploration website
+- `app.py` - Flask entrypoint for Vercel
+- `scripts/sync_public.py` - build sync from `web/` to `public/`
