@@ -15,6 +15,7 @@ def _serve_web_asset(asset: str) -> Response:
 
 
 @app.get("/")
+@app.get("/index.html")
 def root() -> Response:
     return send_from_directory(WEB_DIR, "index.html")
 

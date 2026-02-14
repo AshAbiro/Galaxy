@@ -24,6 +24,13 @@ def test_root_serves_index() -> None:
     assert b"<!doctype html>" in response.data
 
 
+def test_index_html_serves_index() -> None:
+    client = app.test_client()
+    response = client.get("/index.html")
+    assert response.status_code == 200
+    assert b"<!doctype html>" in response.data
+
+
 def test_root_asset_serves_app_js() -> None:
     client = app.test_client()
     response = client.get("/app.js")
