@@ -27,6 +27,7 @@ The project is configured for Vercel's Python runtime with Flask:
 - Flask entrypoint: `app.py`
 - Health endpoint: `/api/health`
 - Static assets served directly from `web/` by Flask routes
+- Live URL: `https://galaxy-eziw.vercel.app/index.html`
 
 Deploy:
 
